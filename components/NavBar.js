@@ -20,6 +20,21 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
+            <Link passHref href="/">
+              <Nav.Link>Bourbon</Nav.Link>
+            </Link>
+            <Link passHref href="/">
+              <Nav.Link>Scotch</Nav.Link>
+            </Link>
+            <Link passHref href="/">
+              <Nav.Link>Whiskey</Nav.Link>
+            </Link>
+            <Link passHref href="/">
+              <Nav.Link>My Reviews</Nav.Link>
+            </Link>
+            <Link passHref href="/">
+              <Nav.Link>Create Review</Nav.Link>
+            </Link>
             <Button variant="danger" onClick={signOut}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
