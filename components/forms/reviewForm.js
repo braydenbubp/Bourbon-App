@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -27,9 +27,9 @@ function ReviewForm({ obj }) {
   const router = useRouter();
   const { user } = useAuth();
 
-  // useEffect(() => {
-  //   if (obj.id) setFormInput({ ...obj, state: obj.state.id });
-  // }, [obj, user]);
+  useEffect(() => {
+    if (obj.firebaseKey) setFormInput(obj);
+  }, [obj, user]);
 
   // useEffect(() => {
   //   getState().then(setStates);
@@ -72,7 +72,7 @@ function ReviewForm({ obj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Add a'} Review</h2>
+      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Add a'} Review</h2>
 
       <FloatingLabel controlId="floatingInput1" label="Spirit Name" className="mb-3">
         <Form.Control

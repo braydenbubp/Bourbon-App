@@ -32,7 +32,7 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>My Reviews</Nav.Link>
             </Link>
-            <Link passHref href="/">
+            <Link passHref href="/review/new">
               <Nav.Link>Create Review</Nav.Link>
             </Link>
             <Button variant="danger" onClick={signOut}>Sign Out</Button>
