@@ -4,7 +4,6 @@ import ReviewCard from '../components/reviewCard';
 
 function Home() {
   const [reviews, setReviews] = useState([]);
-  console.warn(reviews);
 
   const getAllReviews = () => {
     getReviews().then(setReviews);

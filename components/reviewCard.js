@@ -23,6 +23,9 @@ function ReviewCard({ reviewObj, onUpdate }) {
         <Link href={`/review/edit/${reviewObj.firebaseKey}`} passHref>
           <Button variant="info">EDIT</Button>
         </Link>
+        <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
+          <Button variant="light" className="m-2">VIEW</Button>
+        </Link>
         <Button variant="danger" onClick={deleteThisReview} className="m-2">
           DELETE
         </Button>
