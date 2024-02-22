@@ -128,16 +128,10 @@ ReviewForm.propTypes = {
   obj: PropTypes.shape({
     image: PropTypes.string,
     spiritName: PropTypes.string,
-    price: PropTypes.string,
+    price: PropTypes.number,
     description: PropTypes.string,
     id: PropTypes.number,
     firebaseKey: PropTypes.string,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
-      }),
-    ),
   }),
 };
 
