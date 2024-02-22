@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getReviews } from '../api/reviewData';
 import ReviewCard from '../components/reviewCard';
+import SearchBar from '../components/searchBar';
 
 function Home() {
   const [reviews, setReviews] = useState([]);
+  // const [spirits, setSpirits] = useState([]);
 
   const getAllReviews = () => {
     getReviews().then(setReviews);
@@ -15,6 +17,7 @@ function Home() {
 
   return (
     <div>
+      <SearchBar setReviews={setReviews} reviews={reviews} />
       <div className="d-flex flex-wrap">
         {reviews.map((review) => (
           <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviews} />
