@@ -20,13 +20,13 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link passHref href="/">
+            <Link passHref href="/bourbon">
               <Nav.Link>Bourbon</Nav.Link>
             </Link>
-            <Link passHref href="/">
+            <Link passHref href="/scotch">
               <Nav.Link>Scotch</Nav.Link>
             </Link>
-            <Link passHref href="/">
+            <Link passHref href="/whiskey">
               <Nav.Link>Whiskey</Nav.Link>
             </Link>
             <Link passHref href="/">
