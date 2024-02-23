@@ -85,6 +85,13 @@ function ReviewForm({ obj }) {
         />
       </FloatingLabel>
 
+      <Form.Select value={formInput.spiritType} onChange={handleChange} name="spiritType" label="Spirit Type" className="mb-3">
+        <option>Spirit Type</option>
+        <option value="Bourbon">Bourbon</option>
+        <option value="Scotch">Scotch</option>
+        <option value="Whiskey">Whiskey</option>
+      </Form.Select>
+
       <FloatingLabel controlId="floatingInput1" label="Spirit Description" className="mb-3">
         <Form.Control
           type="text"
@@ -107,6 +114,17 @@ function ReviewForm({ obj }) {
         />
       </FloatingLabel>
 
+      <FloatingLabel controlId="floatingInput3" label="Your Rating" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Enter Rating"
+          name="rating"
+          value={formInput.rating}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
       <FloatingLabel controlId="floatingInput2" label="Spirit Images" className="mb-3">
         <Form.Control
           type="url"
@@ -118,7 +136,7 @@ function ReviewForm({ obj }) {
         />
       </FloatingLabel>
 
-      <Button variant="btn-small btn-secondary" type="submit">{obj.id ? 'Update' : 'Create'} Review</Button>
+      <Button variant="btn-small btn-secondary" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Review</Button>
 
     </Form>
   );
@@ -128,10 +146,11 @@ ReviewForm.propTypes = {
   obj: PropTypes.shape({
     image: PropTypes.string,
     spiritName: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     description: PropTypes.string,
-    id: PropTypes.number,
+    rating: PropTypes.string,
     firebaseKey: PropTypes.string,
+    spiritType: PropTypes.string,
   }),
 };
 
