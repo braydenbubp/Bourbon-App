@@ -17,7 +17,7 @@ function ReviewCard({ reviewObj, onUpdate }) {
       <Card.Img variant="top" src={reviewObj.image} alt={reviewObj.spiritName} style={{ height: '400px' }} />
       <Card.Body>
         <Card.Title>{reviewObj.spiritName} </Card.Title>
-        <p>{reviewObj.price}</p>
+        <p>${reviewObj.price}</p>
         <p>{reviewObj.rating}</p>
         <p>{reviewObj.description}</p>
         <Link href={`/review/edit/${reviewObj.firebaseKey}`} passHref>
@@ -38,9 +38,9 @@ ReviewCard.propTypes = {
   reviewObj: PropTypes.shape({
     image: PropTypes.string,
     spiritName: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     description: PropTypes.string,
-    rating: PropTypes.number,
+    rating: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

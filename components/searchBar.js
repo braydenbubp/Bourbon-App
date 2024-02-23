@@ -31,10 +31,10 @@ SearchBar.propTypes = {
     PropTypes.shape({
       image: PropTypes.string,
       name: PropTypes.string,
-      price: PropTypes.number,
+      price: PropTypes.string,
       description: PropTypes.string,
-      rating: PropTypes.number,
-      spiritTypeId: PropTypes.string,
+      rating: PropTypes.string,
+      spiritType: PropTypes.string,
       firebaseKey: PropTypes.string,
     }),
   ).isRequired,

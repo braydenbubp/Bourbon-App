@@ -3,7 +3,7 @@ import { clientCredentials } from '../utils/client';
 const endpoint = clientCredentials.databaseURL;
 
 const getBourbonReviews = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/reviews.json?orderBy="spiritTypeId"&equalTo="Bourbon"`, {
+  fetch(`${endpoint}/reviews.json?orderBy="spiritType"&equalTo="Bourbon"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ const getBourbonReviews = () => new Promise((resolve, reject) => {
 });
 
 const getScotchReviews = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/reviews.json?orderBy="spiritTypeId"&equalTo="Scotch"`, {
+  fetch(`${endpoint}/reviews.json?orderBy="spiritType"&equalTo="Scotch"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const getScotchReviews = () => new Promise((resolve, reject) => {
 });
 
 const getWhiskeyReviews = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/reviews.json?orderBy="spiritTypeId"&equalTo="Whiskey"`, {
+  fetch(`${endpoint}/reviews.json?orderBy="spiritType"&equalTo="Whiskey"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

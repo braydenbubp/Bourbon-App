@@ -5,7 +5,6 @@ import SearchBar from '../components/searchBar';
 
 function Home() {
   const [reviews, setReviews] = useState([]);
-  // const [spirits, setSpirits] = useState([]);
 
   const getAllReviews = () => {
     getReviews().then(setReviews);
