@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SearchBar = ({ setReviews, reviews }) => {
+const SearchBar = ({ setReviewSearch, reviews }) => {
   const handleChange = (e) => {
     const filteredSpirits = [];
 
     reviews.forEach((review) => {
       if (review.spiritName.toLowerCase().includes(e.target.value.toLowerCase())) {
-        console.warn(filteredSpirits.push(review));
+        filteredSpirits.push(review);
       }
       // if (review.rating === e.target.value) {
       //   filteredSpirits.push(review);
       // }
     });
-    setReviews(filteredSpirits);
+    setReviewSearch(filteredSpirits);
   };
 
   return (
@@ -38,7 +38,7 @@ SearchBar.propTypes = {
       firebaseKey: PropTypes.string,
     }),
   ).isRequired,
-  setReviews: PropTypes.func.isRequired,
+  setReviewSearch: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
