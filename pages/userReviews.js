@@ -4,7 +4,7 @@ import ReviewCard from '../components/reviewCard';
 import UserBio from '../components/userBio';
 import { getReviewsByUid } from '../api/reviewData';
 
-function UserTours() {
+function UserReviews() {
   const [reviews, setReviews] = useState([]);
 
   const { user } = useAuth();
@@ -19,8 +19,8 @@ function UserTours() {
 
   return (
     <div className="text-center my-4">
-      <UserBio />
-      <div id="user-tours-cards" className="d-flex flex-wrap">
+      <UserBio key={user.firebaseKey} />
+      <div id="user-review-cards" className="d-flex flex-wrap">
         {reviews.map((review) => (
           <ReviewCard key={review.id} reviewObj={review} onUpdate={getAllReviews} />
         ))}
@@ -30,4 +30,4 @@ function UserTours() {
   );
 }
 
-export default UserTours;
+export default UserReviews;
