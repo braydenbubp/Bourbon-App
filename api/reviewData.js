@@ -20,6 +20,18 @@ const getReviews = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getReviewsByUid = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/reviews.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 const deleteReview = (firebaseKey) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/reviews/${firebaseKey}.json`, {
     method: 'DELETE',
@@ -72,6 +84,7 @@ const updateReview = (payload) => new Promise((resolve, reject) => {
 
 export {
   getReviews,
+  getReviewsByUid,
   deleteReview,
   getSingleReview,
   createReview,

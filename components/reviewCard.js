@@ -4,8 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import { deleteReview } from '../api/reviewData';
+import { useAuth } from '../utils/context/authContext';
 
 function ReviewCard({ reviewObj, onUpdate }) {
+  const { user } = useAuth();
   const deleteThisReview = () => {
     if (window.confirm(`Delete ${reviewObj.spiritName}?`)) {
       deleteReview(reviewObj.firebaseKey).then(() => onUpdate());
@@ -18,17 +20,26 @@ function ReviewCard({ reviewObj, onUpdate }) {
       <Card.Body>
         <Card.Title>{reviewObj.spiritName} </Card.Title>
         <p>${reviewObj.price}</p>
-        <p>{reviewObj.rating}</p>
+        <p>Rating: {reviewObj.rating}</p>
         <p>{reviewObj.description}</p>
-        <Link href={`/review/edit/${reviewObj.firebaseKey}`} passHref>
-          <Button variant="info">EDIT</Button>
-        </Link>
-        <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
-          <Button variant="light" className="m-2">VIEW</Button>
-        </Link>
-        <Button variant="danger" onClick={deleteThisReview} className="m-2">
-          DELETE
-        </Button>
+
+        { user.uid === reviewObj.uid ? (
+          <>
+            <Link href={`/review/edit/${reviewObj.firebaseKey}`} passHref>
+              <Button variant="info">EDIT</Button>
+            </Link>
+            <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
+              <Button variant="light" className="m-2">VIEW</Button>
+            </Link>
+            <Button variant="danger" onClick={deleteThisReview} className="m-2">
+              DELETE
+            </Button>
+          </>
+        ) : (
+          <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
+            <Button variant="light" className="m-2">VIEW</Button>
+          </Link>
+        )}
       </Card.Body>
     </Card>
   );
@@ -42,6 +53,12 @@ ReviewCard.propTypes = {
     description: PropTypes.string,
     rating: PropTypes.string,
     firebaseKey: PropTypes.string,
+    uid: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    uid: PropTypes.string,
+    bio: PropTypes.string,
+    userName: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
