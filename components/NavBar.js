@@ -29,7 +29,7 @@ export default function NavBar() {
             <Link passHref href="/whiskey">
               <Nav.Link>Whiskey</Nav.Link>
             </Link>
-            <Link passHref href="/">
+            <Link passHref href="/userReviews">
               <Nav.Link>My Reviews</Nav.Link>
             </Link>
             <Link passHref href="/review/new">
