@@ -5,7 +5,6 @@ import { useAuth } from '../utils/context/authContext';
 export default function UserBio() {
   const { user } = useAuth();
 
-  console.warn('', user);
   return (
 
     <Card id="bio-card-img">
