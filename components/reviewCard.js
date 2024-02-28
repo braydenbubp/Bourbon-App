@@ -18,7 +18,7 @@ function ReviewCard({ reviewObj, onUpdate }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Img variant="top" src={reviewObj.image} alt={reviewObj.spiritName} style={{ height: '400px' }} />
       <Card.Body>
-        <Card.Title>{reviewObj.spiritName} </Card.Title>
+        <Card.Title>{reviewObj.spiritName}</Card.Title>
         <p>${reviewObj.price}</p>
         <p>Rating: {reviewObj.rating}</p>
         <p>{reviewObj.description}</p>
@@ -54,12 +54,14 @@ ReviewCard.propTypes = {
     rating: PropTypes.string,
     firebaseKey: PropTypes.string,
     uid: PropTypes.string,
+    reviewId: PropTypes.string,
   }).isRequired,
+  // eslint-disable-next-line react/require-default-props
   user: PropTypes.shape({
     uid: PropTypes.string,
     bio: PropTypes.string,
     userName: PropTypes.string,
-  }).isRequired,
+  }),
   onUpdate: PropTypes.func.isRequired,
 };
 
