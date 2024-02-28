@@ -12,7 +12,7 @@ function RegisterForm({ user }) {
   });
 
   const router = useRouter();
-
+  console.warn(user);
   useEffect(() => {
     if (user.firebaseKey) setFormData(user);
   }, [user]);
