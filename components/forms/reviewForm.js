@@ -6,9 +6,6 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { createReview, updateReview } from '../../api/reviewData';
-// import DropDown from '../MultiSelectDD';
-// import getState from '../../api/stateData';
-// import DropDownSelectedContext from '../../utils/context/dropdownSelectedContext';
 
 const initialState = {
   spiritName: '',
@@ -21,31 +18,13 @@ const initialState = {
 
 function ReviewForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  // const [selectedCategories, setSelectedCategories] = useState([]);
-  // const [states, setStates] = useState([]);
-  // const [existingCategories, setExistingCategories] = useState([]);
+
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
-
-  // useEffect(() => {
-  //   getState().then(setStates);
-  // }, []);
-
-  // useEffect(() => {
-  //   const previousCategories = [];
-  //   if (obj.id) {
-  //     if (obj.id) {
-  //       obj.categories.forEach((category) => {
-  //         previousCategories.push(category.id);
-  //       });
-  //       setExistingCategories(previousCategories);
-  //     }
-  //   }
-  // }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

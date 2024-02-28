@@ -29,7 +29,6 @@ const AuthProvider = (props) => {
     }),
     [oAuthUser],
   );
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
@@ -39,7 +38,8 @@ const AuthProvider = (props) => {
           if ('null' in gamerInfo) {
             userObj = gamerInfo;
           } else {
-            userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
+            userObj = { uid: fbUser.uid, ...gamerInfo };
+            console.warn(userObj);
           }
           setUser(userObj);
         });
@@ -59,7 +59,7 @@ const AuthProvider = (props) => {
       // as long as user === null, will be true
       // As soon as the user value !== null, value will be false
     }),
-    [user, oAuthUser, updateUser, setUser],
+    [user, updateUser, setUser],
   );
 
   return <AuthContext.Provider value={value} {...props} />;
