@@ -33,13 +33,14 @@ const AuthProvider = (props) => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
         setOAuthUser(fbUser);
-        getUser(fbUser).then((gamerInfo) => {
+        getUser(fbUser.uid).then((gamerInfo) => {
           let userObj = {};
           if ('null' in gamerInfo) {
             userObj = gamerInfo;
           } else {
-            userObj = { uid: fbUser.uid, ...gamerInfo };
-            console.warn(userObj);
+            userObj = {
+              uid: fbUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
+            };
           }
           setUser(userObj);
         });
@@ -76,3 +77,5 @@ const useAuth = () => {
 };
 
 export { AuthProvider, useAuth, AuthConsumer };
+
+// userobj needs to match update user, need call update user after profile update

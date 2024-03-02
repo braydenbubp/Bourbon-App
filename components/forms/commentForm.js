@@ -24,7 +24,7 @@ export default function CommentForm({ commentObj }) {
     e.preventDefault();
     const payload = { ...commentInput };
     console.warn(commentObj);
-    createComment(payload).then(router);
+    createComment(payload).then(() => { router.push('/review'); });
   };
   // router.reload needs worked so page renders without reload, possible state change on view page to fix it?
 

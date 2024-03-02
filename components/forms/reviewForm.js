@@ -23,7 +23,9 @@ function ReviewForm({ obj }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
+    if (obj.firebaseKey) {
+      setFormInput(obj);
+    }
   }, [obj, user]);
 
   const handleChange = (e) => {

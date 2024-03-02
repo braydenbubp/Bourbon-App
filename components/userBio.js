@@ -1,13 +1,9 @@
 import { Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
 
 export default function UserBio() {
   const { user } = useAuth();
-  const router = useRouter();
-
-  const { firebaseKey } = router.query;
 
   return (
 
@@ -15,7 +11,7 @@ export default function UserBio() {
       <Card.Body>
         <Card.Title>{user.userName} </Card.Title>
         <p>{user.bio}</p>
-        <Link href={`/user/edit/${firebaseKey}`} passHref>
+        <Link href={`/user/edit/${user.firebaseKey}`} passHref>
           <Button variant="btn-small btn-secondary" className="btn">Edit Bio</Button>
         </Link>
 
@@ -27,3 +23,6 @@ export default function UserBio() {
     </Card>
   );
 }
+
+// api call on this page to get user to get firebasekey instead of router query
+// get firebasekey into edit btn

@@ -19,7 +19,7 @@ function UserReviews() {
 
   return (
     <div className="text-center my-4">
-      <UserBio key={user.firebaseKey} />
+      <UserBio />
       <div id="user-review-cards" className="d-flex flex-wrap">
         {reviews.map((review) => (
           <ReviewCard key={review.id} reviewObj={review} onUpdate={getAllReviews} />

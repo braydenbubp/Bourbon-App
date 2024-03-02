@@ -4,25 +4,32 @@ import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { registerUser, updateUser } from '../../utils/auth';
 
-function RegisterForm({ user }) {
+function RegisterForm({ userObj }) {
   const [formData, setFormData] = useState({
     bio: '',
     userName: '',
-    uid: user.uid,
   });
 
   const router = useRouter();
-  console.warn(user);
   useEffect(() => {
-    if (user.firebaseKey) setFormData(user);
-  }, [user]);
+    if (userObj.firebaseKey) {
+      setFormData(userObj);
+    }
+  }, [userObj]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (user.firebaseKey) {
+    if (userObj.firebaseKey) {
       updateUser(formData).then(() => router.push('/userReviews'));
+    } else {
+      const payload = { ...formData, uid: userObj.uid };
+      registerUser(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+        updateUser(patchPayload).then(() => {
+          router.push('/userReviews');
+        });
+      });
     }
-    registerUser(formData).then(router.push('/userReviews'));
   };
 
   return (
@@ -40,7 +47,7 @@ function RegisterForm({ user }) {
 }
 
 RegisterForm.propTypes = {
-  user: PropTypes.shape({
+  userObj: PropTypes.shape({
     uid: PropTypes.string,
     bio: PropTypes.string,
     firebaseKey: PropTypes.string,
