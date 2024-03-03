@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { registerUser, updateUser } from '../../utils/auth';
 
@@ -16,6 +16,14 @@ function RegisterForm({ userObj }) {
       setFormData(userObj);
     }
   }, [userObj]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,14 +42,32 @@ function RegisterForm({ userObj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3">
-        <Form.Label><h1>Spirit Enthusiast</h1></Form.Label>
-        <Form.Control as="textarea" name="userName" id="userName" required placeholder="Enter your User Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-        <Form.Control as="textarea" name="bio" id="bio" required placeholder="Enter your Bio" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-      </Form.Group>
-      <Button variant="secondary" type="submit" className="btn btn-small">
-        Submit
-      </Button>
+      <h2 className="text-white mt-5">{userObj.firebaseKey ? 'Update' : 'Add a'} Bio</h2>
+
+      <FloatingLabel controlId="floatingInput1" label="User Name" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="User Name"
+          name="userName"
+          value={formData.userName}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingInput3" label="User Bio" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Enter Bio"
+          name="bio"
+          value={formData.bio}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <Button variant="btn-small btn-secondary" type="submit">{userObj.firebaseKey ? 'Edit' : 'Create'} Bio</Button>
+
     </Form>
   );
 }

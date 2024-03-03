@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Card } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import { getSingleReview } from '../../api/reviewData';
 import CommentForm from '../../components/forms/commentForm';
 import CommentCard from '../../components/commentCard';
 
-export default function ViewReview() {
+export default function ViewReview({ userObj }) {
   const [reviewDetails, setReviewDetails] = useState({});
   const [commentDetails, setCommentDetails] = useState({});
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function ViewReview() {
       </div>
       <div className="text-white ms-5 details">
         <Card.Title>{reviewDetails.spiritName}</Card.Title>
-        Reviewed By: {reviewDetails.userName}
+        Reviewed By: {userObj.userName}
         <p>Description: {reviewDetails.description || ''}</p>
         <p>Price: ${reviewDetails.price}</p>
         <p>Rating: {reviewDetails.rating}</p>
@@ -33,10 +34,12 @@ export default function ViewReview() {
           width: '20rem', margin: '10px', backgroundColor: '#cbbaa6', color: '#605d50',
         }}
         >
-          <CommentForm commentObj={commentDetails} setCommentObj={setCommentDetails} />
+          <div>
+            <CommentForm commentObj={commentDetails} setCommentObj={setCommentDetails} reviewDetails={reviewDetails} />
+          </div>
           <div className="d-flex flex-wrap"> Comments:
             {commentDetails.comment?.map((comments) => (
-              <CommentCard key={comments.reviewId} comment={comments} />
+              <CommentCard key={comments.firebaseKey} comment={comments} />
             ))}
           </div>
         </Card>
@@ -44,3 +47,12 @@ export default function ViewReview() {
     </div>
   );
 }
+// userObj needs passed in for reviewdetails.userNAme so the user renders
+ViewReview.propTypes = {
+  userObj: PropTypes.shape({
+    uid: PropTypes.string,
+    bio: PropTypes.string,
+    firebaseKey: PropTypes.string,
+    userName: PropTypes.string,
+  }).isRequired,
+};

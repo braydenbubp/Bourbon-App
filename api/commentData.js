@@ -10,9 +10,38 @@ const createComment = (payload) => new Promise((resolve, reject) => {
     },
     body: JSON.stringify(payload),
   })
-    .then((data) => resolve(Object.values(data)))
+    .then((response) => response.json())
     .then((data) => resolve(data))
     .catch(reject);
 });
 
-export default createComment;
+const updateComment = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/comment/${payload.firebaseKey}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+const deleteComment = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/comment/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve((data)))
+    .catch(reject);
+});
+
+export {
+  createComment,
+  updateComment,
+  deleteComment,
+};
