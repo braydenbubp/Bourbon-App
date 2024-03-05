@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Card } from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { getSingleReview } from '../../api/reviewData';
 import CommentForm from '../../components/forms/commentForm';
 import CommentCard from '../../components/commentCard';
+import viewReviewDetails from '../../api/mergedData';
 
-export default function ViewReview({ userObj }) {
+export default function ViewReview() {
   const [reviewDetails, setReviewDetails] = useState({});
   const [commentDetails, setCommentDetails] = useState({});
   const router = useRouter();
@@ -14,7 +13,7 @@ export default function ViewReview({ userObj }) {
   const { firebaseKey } = router.query;
 
   useEffect(() => {
-    getSingleReview(firebaseKey).then(setReviewDetails);
+    viewReviewDetails(firebaseKey).then(setReviewDetails);
   }, [firebaseKey]);
 
   return (
@@ -24,7 +23,7 @@ export default function ViewReview({ userObj }) {
       </div>
       <div className="text-white ms-5 details">
         <Card.Title>{reviewDetails.spiritName}</Card.Title>
-        Reviewed By: {userObj.userName}
+        <p>Reviewed By: {reviewDetails.userObject?.userName}</p>
         <p>Description: {reviewDetails.description || ''}</p>
         <p>Price: ${reviewDetails.price}</p>
         <p>Rating: {reviewDetails.rating}</p>
@@ -48,11 +47,3 @@ export default function ViewReview({ userObj }) {
   );
 }
 // userObj needs passed in for reviewdetails.userNAme so the user renders
-ViewReview.propTypes = {
-  userObj: PropTypes.shape({
-    uid: PropTypes.string,
-    bio: PropTypes.string,
-    firebaseKey: PropTypes.string,
-    userName: PropTypes.string,
-  }).isRequired,
-};

@@ -2,6 +2,24 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
+const getComments = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/comment.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 const createComment = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/comment.json`, {
     method: 'POST',
@@ -44,4 +62,5 @@ export {
   createComment,
   updateComment,
   deleteComment,
+  getComments,
 };

@@ -8,6 +8,7 @@ import { useAuth } from '../../utils/context/authContext';
 import { createReview, updateReview } from '../../api/reviewData';
 
 const initialState = {
+  userId: '',
   spiritName: '',
   image: '',
   price: '',
@@ -43,7 +44,7 @@ function ReviewForm({ obj }) {
     } else {
       const payload = { ...formInput, uid: user.uid };
       createReview(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        const patchPayload = { firebaseKey: name, userId: user.firebaseKey };
         updateReview(patchPayload).then(() => {
           router.push('/');
         });

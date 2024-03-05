@@ -15,7 +15,6 @@ export default function CommentForm({ commentObj, reviewDetails }) {
   const router = useRouter();
   const { user } = useAuth();
 
-  console.warn(reviewDetails);
   useEffect(() => {
     if (commentObj.firebaseKey) {
       setCommentInput(commentObj);

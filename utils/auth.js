@@ -16,6 +16,18 @@ const getUser = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getSingleUser = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/user/${firebaseKey}.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/user.json`, {
     method: 'POST',
@@ -55,6 +67,7 @@ export {
   signIn,
   signOut,
   getUser,
+  getSingleUser,
   registerUser,
   updateUser,
 };
