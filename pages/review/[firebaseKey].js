@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Card } from 'react-bootstrap';
 import CommentForm from '../../components/forms/commentForm';
 import CommentCard from '../../components/commentCard';
-import viewReviewDetails from '../../api/mergedData';
+import { commentsOnReview, viewReviewDetails } from '../../api/mergedData';
 
 export default function ViewReview() {
   const [reviewDetails, setReviewDetails] = useState({});
@@ -14,6 +14,10 @@ export default function ViewReview() {
 
   useEffect(() => {
     viewReviewDetails(firebaseKey).then(setReviewDetails);
+  }, [firebaseKey]);
+
+  useEffect(() => {
+    commentsOnReview(firebaseKey).then(setCommentDetails);
   }, [firebaseKey]);
 
   return (

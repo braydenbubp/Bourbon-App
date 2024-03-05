@@ -20,6 +20,18 @@ const getComments = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getReviewComments = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/comment.json?orderBy="reviewId"&equalTo="${firebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 const createComment = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/comment.json`, {
     method: 'POST',
@@ -63,4 +75,5 @@ export {
   updateComment,
   deleteComment,
   getComments,
+  getReviewComments,
 };

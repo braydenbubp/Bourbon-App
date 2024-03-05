@@ -1,5 +1,5 @@
 import { getSingleUser } from '../utils/auth';
-import { getComments } from './commentData';
+import { getReviewComments } from './commentData';
 import { getSingleReview } from './reviewData';
 
 const viewReviewDetails = (reviewFirebaseKey) => new Promise((resolve, reject) => {
@@ -12,13 +12,10 @@ const viewReviewDetails = (reviewFirebaseKey) => new Promise((resolve, reject) =
     }).catch((error) => reject(error));
 });
 
-const commentsOnReview = (reviewComments) => new Promise((resolve, reject) => {
-  getComments(reviewComments)
-    .then((commentArray) => {
-      getSingleReview(commentArray.reviewId)
-        .then((reviewObject) => {
-          resolve({ reviewObject, ...commentArray });
-        });
+const commentsOnReview = (reviewFirebaseKey) => new Promise((resolve, reject) => {
+  Promise.all([getSingleReview(reviewFirebaseKey), getReviewComments(reviewFirebaseKey)])
+    .then(([reviewObject, reviewCommentArray]) => {
+      resolve({ ...reviewObject, comment: reviewCommentArray });
     }).catch((error) => reject(error));
 });
 

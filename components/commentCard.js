@@ -17,6 +17,9 @@ function CommentCard({ comment }) {
 CommentCard.propTypes = {
   comment: PropTypes.shape({
     content: PropTypes.string,
+    firebaseKey: PropTypes.string,
+    reviewId: PropTypes.string,
+    uid: PropTypes.string,
   }).isRequired,
 };
 
