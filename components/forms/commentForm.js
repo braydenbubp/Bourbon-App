@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
@@ -9,17 +8,10 @@ const initialState = {
   content: '',
 };
 
-export default function CommentForm({ commentObj, reviewDetails }) {
+export default function CommentForm({ reviewDetails, onUpdate }) {
   const [commentInput, setCommentInput] = useState(initialState);
 
-  const router = useRouter();
   const { user } = useAuth();
-
-  useEffect(() => {
-    if (commentObj.firebaseKey) {
-      setCommentInput(commentObj);
-    }
-  }, [commentObj, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,18 +23,13 @@ export default function CommentForm({ commentObj, reviewDetails }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (commentObj.firebaseKey) {
-      updateComment(commentInput).then(() => router.push(`/review/${reviewDetails.firebaseKey}`));
-    } else {
-      const payload = { ...commentInput, uid: user.uid };
-      createComment(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name, reviewId: reviewDetails.firebaseKey };
-        updateComment(patchPayload).then(() => {
-          router.push(`/review/${reviewDetails.firebaseKey}`);
-        });
-      });
-    }
+    const payload = { ...commentInput, uid: user.uid };
+    createComment(payload).then(({ name }) => {
+      const patchPayload = { firebaseKey: name, reviewId: reviewDetails.firebaseKey };
+      updateComment(patchPayload).then(() => onUpdate());
+    });
   };
+
   // router.reload needs worked so page renders without reload, possible state change on view page to fix it?
 
   return (
@@ -79,4 +66,5 @@ CommentForm.propTypes = {
     uid: PropTypes.string,
     reviewId: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }.isRequired;

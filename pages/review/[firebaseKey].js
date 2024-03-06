@@ -8,20 +8,23 @@ import { getReviewComments } from '../../api/commentData';
 
 export default function ViewReview() {
   const [reviewDetails, setReviewDetails] = useState({});
-  const [commentObj, setCommentObj] = useState({});
+  const [commentArray, setCommentArray] = useState([]);
   const router = useRouter();
 
   const { firebaseKey } = router.query;
+
+  const commentUpdate = () => {
+    getReviewComments(firebaseKey).then(setCommentArray);
+  };
 
   useEffect(() => {
     viewReviewDetails(firebaseKey).then(setReviewDetails);
   }, [firebaseKey]);
 
   useEffect(() => {
-    getReviewComments(firebaseKey).then(setCommentObj);
+    commentUpdate();
   }, [firebaseKey]);
-  console.warn(reviewDetails);
-  console.warn(commentObj);
+
   return (
     <div className="mt-5 d-flex flex-wrap">
       <div className="d-flex flex-column">
@@ -40,10 +43,10 @@ export default function ViewReview() {
         }}
         >
           <div>
-            <CommentForm commentObj={commentObj} setCommentObj={setCommentObj} reviewDetails={reviewDetails} />
+            <CommentForm commentArray={commentArray} setCommentArray={setCommentArray} reviewDetails={reviewDetails} onUpdate={commentUpdate} />
           </div>
           <div className="d-flex flex-wrap"> Comments:
-            {commentObj.comment?.map((comments) => (
+            {commentArray.map((comments) => (
               <CommentCard key={comments.firebaseKey} comment={comments} />
             ))}
           </div>
