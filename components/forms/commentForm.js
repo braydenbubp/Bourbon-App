@@ -9,7 +9,7 @@ const initialState = {
   content: '',
 };
 
-export default function CommentForm({ commentObj, reviewDetails, reviewObj }) {
+export default function CommentForm({ commentObj, reviewDetails }) {
   const [commentInput, setCommentInput] = useState(initialState);
 
   const router = useRouter();
@@ -34,9 +34,9 @@ export default function CommentForm({ commentObj, reviewDetails, reviewObj }) {
     if (commentObj.firebaseKey) {
       updateComment(commentInput).then(() => router.push(`/review/${reviewDetails.firebaseKey}`));
     } else {
-      const payload = { ...commentInput, uid: commentObj.uid };
+      const payload = { ...commentInput, uid: user.uid };
       createComment(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name, reviewId: reviewObj.firebaseKey };
+        const patchPayload = { firebaseKey: name, reviewId: reviewDetails.firebaseKey };
         updateComment(patchPayload).then(() => {
           router.push(`/review/${reviewDetails.firebaseKey}`);
         });

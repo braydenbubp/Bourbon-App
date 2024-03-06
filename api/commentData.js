@@ -20,8 +20,8 @@ const getComments = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getReviewComments = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/comment.json?orderBy="reviewId"&equalTo="${firebaseKey}"`, {
+const getReviewComments = (reviewId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/comment.json?orderBy="reviewId"&equalTo="${reviewId}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

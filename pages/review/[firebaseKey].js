@@ -3,11 +3,12 @@ import { useRouter } from 'next/router';
 import { Card } from 'react-bootstrap';
 import CommentForm from '../../components/forms/commentForm';
 import CommentCard from '../../components/commentCard';
-import { commentsOnReview, viewReviewDetails } from '../../api/mergedData';
+import { viewReviewDetails } from '../../api/mergedData';
+import { getReviewComments } from '../../api/commentData';
 
 export default function ViewReview() {
   const [reviewDetails, setReviewDetails] = useState({});
-  const [commentDetails, setCommentDetails] = useState({});
+  const [commentObj, setCommentObj] = useState({});
   const router = useRouter();
 
   const { firebaseKey } = router.query;
@@ -17,9 +18,10 @@ export default function ViewReview() {
   }, [firebaseKey]);
 
   useEffect(() => {
-    commentsOnReview(firebaseKey).then(setCommentDetails);
+    getReviewComments(firebaseKey).then(setCommentObj);
   }, [firebaseKey]);
-
+  console.warn(reviewDetails);
+  console.warn(commentObj);
   return (
     <div className="mt-5 d-flex flex-wrap">
       <div className="d-flex flex-column">
@@ -38,10 +40,10 @@ export default function ViewReview() {
         }}
         >
           <div>
-            <CommentForm commentObj={commentDetails} setCommentObj={setCommentDetails} reviewDetails={reviewDetails} />
+            <CommentForm commentObj={commentObj} setCommentObj={setCommentObj} reviewDetails={reviewDetails} />
           </div>
           <div className="d-flex flex-wrap"> Comments:
-            {commentDetails.comment?.map((comments) => (
+            {commentObj.comment?.map((comments) => (
               <CommentCard key={comments.firebaseKey} comment={comments} />
             ))}
           </div>
@@ -50,4 +52,3 @@ export default function ViewReview() {
     </div>
   );
 }
-// userObj needs passed in for reviewdetails.userNAme so the user renders
