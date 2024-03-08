@@ -23,7 +23,7 @@ export default function ViewReview() {
 
   useEffect(() => {
     commentUpdate();
-  }, [firebaseKey]);
+  });
 
   return (
     <div className="mt-5 d-flex flex-wrap">

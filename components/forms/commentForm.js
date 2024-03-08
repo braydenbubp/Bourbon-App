@@ -30,8 +30,6 @@ export default function CommentForm({ reviewDetails, onUpdate }) {
     });
   };
 
-  // router.reload needs worked so page renders without reload, possible state change on view page to fix it?
-
   return (
     <Form onSubmit={handleSubmit}>
       <FloatingLabel controlId="floatingInput4" label="Spirit Comment" className="mb-3">
