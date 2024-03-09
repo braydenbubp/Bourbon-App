@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { createReview, updateReview } from '../../api/reviewData';
+import TastingNotesDropDown from '../tastingNotes';
 
 const initialState = {
   userId: '',
@@ -117,6 +118,8 @@ function ReviewForm({ obj }) {
           required
         />
       </FloatingLabel>
+
+      <TastingNotesDropDown />
 
       <Button variant="btn-small btn-secondary" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Review</Button>
 
