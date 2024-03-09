@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { deleteReview } from '../api/reviewData';
 import { useAuth } from '../utils/context/authContext';
+import { deleteReviewComments } from '../api/mergedData';
 
 function ReviewCard({ reviewObj, onUpdate }) {
   const { user } = useAuth();
+
   const deleteThisReview = () => {
     if (window.confirm(`Delete ${reviewObj.spiritName}?`)) {
-      deleteReview(reviewObj.firebaseKey).then(() => onUpdate());
+      deleteReviewComments(reviewObj.firebaseKey).then(() => onUpdate());
     }
   };
 

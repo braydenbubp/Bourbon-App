@@ -23,7 +23,7 @@ const data = [
 const MultiSelectDropdown = ({ options, selected, toggleOption }) => (
   <div className="c-multi-select-dropdown">
     <div className="c-multi-select-dropdown__selected">
-      <div> Select Tasting Notes</div>
+      <div> Select Tasting Notes </div>
     </div>
     <ul className="c-multi-select-dropdown__options">
       {options.map((option) => {
@@ -33,7 +33,7 @@ const MultiSelectDropdown = ({ options, selected, toggleOption }) => (
           <div>
             <FloatingLabel className="c-multi-select-dropdown__option" onClick={() => toggleOption({ id: option.id })}>
               <input type="checkbox" checked={isSelected} className="c-multi-select-dropdown__option-checkbox" />
-              <span>{option.title}</span>
+              <span>{option.note}</span>
             </FloatingLabel>
           </div>
         );
