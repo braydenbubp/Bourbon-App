@@ -23,6 +23,7 @@ function ReviewForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [existingNotes, setExistingNotes] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   const router = useRouter();
   const { user } = useAuth();
@@ -184,7 +185,7 @@ function ReviewForm({ obj }) {
         ))} */}
 
           <FloatingLabel id="notes-dropdown">
-            <TastingNotesDropDown existingNotes={existingNotes} onChange={handleChange} formInput={formInput} />
+            <TastingNotesDropDown existingNotes={existingNotes} selected={selected} setSelected={setSelected} />
           </FloatingLabel>
 
           <Button variant="btn-small btn-secondary" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Review</Button>

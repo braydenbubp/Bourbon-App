@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FloatingLabel } from 'react-bootstrap';
-import { useRouter } from 'next/router';
 import DropDownSelectedContext from '../utils/context/dropDownContext';
 import getTastingNotes from '../api/tastingNoteData';
 
@@ -15,11 +14,12 @@ const MultiSelectDropdown = ({
     <ul className="c-multi-select-dropdown__options">
       {options.map((option) => (
         <div>
-          <FloatingLabel className="c-multi-select-dropdown__option" onClick={() => toggleOption({ firebaseKey: option.firebaseKey })}>
+          <FloatingLabel className="c-multi-select-dropdown__option" onClick={(e) => toggleOption(e.target.id)}>
             <input
               type="checkbox"
               checked={selected[option.firebaseKey]}
               className="c-multi-select-dropdown__option-checkbox"
+              id={option.firebaseKey}
             />
             <span>{option.note}</span>
           </FloatingLabel>
@@ -29,14 +29,9 @@ const MultiSelectDropdown = ({
   </div>
 );
 
-const TastingNotesDropDown = ({ existingNotes }) => {
+const TastingNotesDropDown = ({ existingNotes, selected, setSelected }) => {
   const [notes, setNotes] = useState([]);
-  const [selected, setSelected] = useState([]);
   const { setSelectedNotes } = useContext(DropDownSelectedContext);
-
-  const router = useRouter();
-
-  const { firebaseKey } = router.query;
 
   useEffect(() => {
     setSelectedNotes(selected);
@@ -46,17 +41,17 @@ const TastingNotesDropDown = ({ existingNotes }) => {
     if (existingNotes.length > 0) {
       setSelected(existingNotes);
     }
-  }, [existingNotes]);
+  }, [existingNotes, setSelected]);
 
-  const toggleOption = () => {
+  const toggleOption = (toggleId) => {
     setSelected((prevSelected) => {
       // if it's in, remove
       const newArray = [...prevSelected];
-      if (newArray.includes(firebaseKey)) {
-        return newArray.filter((item) => item !== firebaseKey);
+      if (newArray.includes(toggleId)) {
+        return newArray.filter((item) => item !== toggleId);
         // else, add
       }
-      newArray.push(firebaseKey);
+      newArray.push(toggleId);
       return newArray;
     });
   };
@@ -64,9 +59,8 @@ const TastingNotesDropDown = ({ existingNotes }) => {
   useEffect(() => {
     getTastingNotes().then(setNotes);
   }, []);
-
   return (
-    <MultiSelectDropdown options={notes} selected={selected} toggleOption={toggleOption} firebaseKey={firebaseKey} />
+    <MultiSelectDropdown options={notes} selected={selected} toggleOption={toggleOption} />
   );
 };
 
@@ -79,8 +73,8 @@ MultiSelectDropdown.propTypes = {
   ).isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+      firebaseKey: PropTypes.string.isRequired,
+      note: PropTypes.string.isRequired,
     }),
   ).isRequired,
   toggleOption: PropTypes.arrayOf(
@@ -94,6 +88,18 @@ MultiSelectDropdown.propTypes = {
 TastingNotesDropDown.propTypes = {
   existingNotes: PropTypes.arrayOf(
     PropTypes.string,
+  ).isRequired,
+  selected: PropTypes.arrayOf(
+    PropTypes.shape({
+      firebaseKey: PropTypes.string.isRequired,
+      note: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  setSelected: PropTypes.arrayOf(
+    PropTypes.shape({
+      firebaseKey: PropTypes.string.isRequired,
+      note: PropTypes.string.isRequired,
+    }),
   ).isRequired,
 };
 
