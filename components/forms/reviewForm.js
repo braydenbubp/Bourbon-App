@@ -60,7 +60,7 @@ function ReviewForm({ obj }) {
     } else {
       const payload = { ...formInput, uid: user.uid };
       createReview(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name, userId: user.firebaseKey };
+        const patchPayload = { firebaseKey: name, userId: user.firebaseKey, tasteProfile: selectedNotes };
         updateReview(patchPayload).then(() => {
           router.push('/');
         });
@@ -184,7 +184,7 @@ function ReviewForm({ obj }) {
         ))} */}
 
           <FloatingLabel id="notes-dropdown">
-            <TastingNotesDropDown existingNotes={existingNotes} onChange={handleChange} />
+            <TastingNotesDropDown existingNotes={existingNotes} onChange={handleChange} formInput={formInput} />
           </FloatingLabel>
 
           <Button variant="btn-small btn-secondary" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Review</Button>
