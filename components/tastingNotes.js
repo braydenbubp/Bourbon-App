@@ -14,7 +14,7 @@ const MultiSelectDropdown = ({
     <ul className="c-multi-select-dropdown__options">
       {options.map((option) => (
         <div>
-          <FloatingLabel className="c-multi-select-dropdown__option" onClick={(e) => toggleOption(e.target.id)}>
+          <FloatingLabel className="c-multi-select-dropdown__option" onClick={(e) => toggleOption(e.target.id, option)}>
             <input
               type="checkbox"
               checked={selected[option.firebaseKey]}
@@ -43,22 +43,26 @@ const TastingNotesDropDown = ({ existingNotes, selected, setSelected }) => {
     }
   }, [existingNotes, setSelected]);
 
-  const toggleOption = (toggleId) => {
+  const toggleOption = (toggleId, option) => {
     setSelected((prevSelected) => {
       // if it's in, remove
       const newArray = [...prevSelected];
-      if (newArray.includes(toggleId)) {
-        return newArray.filter((item) => item !== toggleId);
+      const isOptionInArray = newArray.some((item) => item.firebaseKey === toggleId);
+      if (isOptionInArray) {
+        return newArray.filter((item) => item.firebaseKey !== toggleId);
         // else, add
       }
-      newArray.push(toggleId);
+      newArray.push(option);
       return newArray;
     });
   };
 
   useEffect(() => {
-    getTastingNotes().then(setNotes);
+    getTastingNotes().then((notesArray) => setNotes(notesArray));
   }, []);
+  // useEffect(() => {
+  //   getTastingNotes().then((notesArray) => setSelected(notesArray));
+  // }, [setSelected]);
   return (
     <MultiSelectDropdown options={notes} selected={selected} toggleOption={toggleOption} />
   );

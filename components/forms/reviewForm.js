@@ -8,6 +8,7 @@ import { useAuth } from '../../utils/context/authContext';
 import { createReview, updateReview } from '../../api/reviewData';
 import TastingNotesDropDown from '../tastingNotes';
 import DropDownSelectedContext from '../../utils/context/dropDownContext';
+import { createReviewTasteProfile, updateReviewTasteProfile } from '../../api/reviewTasteProfile';
 
 const initialState = {
   userId: '',
@@ -19,7 +20,7 @@ const initialState = {
   spiritType: '',
 };
 
-function ReviewForm({ obj }) {
+function ReviewForm({ obj, reviewDetails }) {
   const [formInput, setFormInput] = useState(initialState);
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [existingNotes, setExistingNotes] = useState([]);
@@ -27,6 +28,14 @@ function ReviewForm({ obj }) {
 
   const router = useRouter();
   const { user } = useAuth();
+
+  const addNoteToReview = async (reviewId = null) => {
+    createReviewTasteProfile({ tasteProfileId: selected ?? selected.firebaseKey, reviewId: reviewId ?? reviewDetails.firebaseKey }).then(async ({ name }) => {
+      const patchPayload2 = { firebaseKey: name };
+      await updateReviewTasteProfile(patchPayload2);
+      setSelectedNotes(selectedNotes);
+    });
+  };
 
   useEffect(() => {
     if (obj.firebaseKey) {
@@ -61,8 +70,9 @@ function ReviewForm({ obj }) {
     } else {
       const payload = { ...formInput, uid: user.uid };
       createReview(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name, userId: user.firebaseKey, tasteProfile: selectedNotes };
-        updateReview(patchPayload).then(() => {
+        const patchPayload = { firebaseKey: name, userId: user.firebaseKey };
+        updateReview(patchPayload).then(async () => {
+          await addNoteToReview(name);
           router.push('/');
         });
       });
@@ -137,53 +147,6 @@ function ReviewForm({ obj }) {
             />
           </FloatingLabel>
 
-          {/* <p>Select Taste Profile</p>
-        {['checkbox'].map((type) => (
-          <div className="mb-3">
-            <Form.Check
-              inline
-              label="Oak"
-              name="tastingNotes"
-              value={formInput.tastingNotes}
-              type="checkbox"
-              onChange={(e) => {
-                const { name, value } = e.target;
-                setFormInput((prevState) => ({
-                  ...prevState,
-                  [name]: value,
-                }));
-              }}
-            />
-            <Form.Check
-              inline
-              label="Caramel"
-              name="tastingNotes"
-              value={formInput.tastingNotes}
-              onChange={handleChange}
-              type={type}
-              id={`inline-${type}-2`}
-            />
-            <Form.Check
-              inline
-              label="Vanilla"
-              name="tastingNotes"
-              value={formInput.tastingNotes}
-              onChange={handleChange}
-              type={type}
-              id={`inline-${type}-3`}
-            />
-            <Form.Check
-              inline
-              label="Chocolate"
-              name="tastingNotes"
-              value={formInput.tastingNotes}
-              onChange={handleChange}
-              type={type}
-              id={`inline-${type}-4`}
-            />
-          </div>
-        ))} */}
-
           <FloatingLabel id="notes-dropdown">
             <TastingNotesDropDown existingNotes={existingNotes} selected={selected} setSelected={setSelected} />
           </FloatingLabel>
@@ -212,6 +175,16 @@ ReviewForm.propTypes = {
       }),
     ),
   }),
+  reviewDetails: PropTypes.shape({
+    image: PropTypes.string,
+    spiritName: PropTypes.string,
+    price: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.string,
+    firebaseKey: PropTypes.string,
+    uid: PropTypes.string,
+    reviewId: PropTypes.string,
+  }).isRequired,
 };
 
 ReviewForm.defaultProps = {
