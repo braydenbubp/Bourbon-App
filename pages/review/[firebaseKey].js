@@ -5,10 +5,12 @@ import CommentForm from '../../components/forms/commentForm';
 import CommentCard from '../../components/commentCard';
 import { viewReviewDetails } from '../../api/mergedData';
 import { getReviewComments } from '../../api/commentData';
+import { getRTPByReviewId } from '../../api/reviewTasteProfile';
 
 export default function ViewReview() {
   const [reviewDetails, setReviewDetails] = useState({});
   const [commentArray, setCommentArray] = useState([]);
+  const [reviewTasteProfile, setReviewTasteProfile] = useState([]);
   const router = useRouter();
 
   const { firebaseKey } = router.query;
@@ -19,6 +21,9 @@ export default function ViewReview() {
 
   useEffect(() => {
     viewReviewDetails(firebaseKey).then(setReviewDetails);
+    getRTPByReviewId(firebaseKey).then((rtp) => {
+      setReviewTasteProfile(rtp[0]);
+    });
   }, [firebaseKey]);
 
   useEffect(() => {
@@ -36,6 +41,10 @@ export default function ViewReview() {
         <p>Description: {reviewDetails.description || ''}</p>
         <p>Price: ${reviewDetails.price}</p>
         <p>Rating: {reviewDetails.rating}</p>
+        <p>Note Profile: {reviewTasteProfile.tasteProfileId?.map((notes, index) => (
+          <span key={notes.firebaseKey}>{`${notes.note}${index !== notes.length - 1 ? ', ' : ''}`}</span>
+        ))}
+        </p>
       </div>
       <div>
         <Card style={{

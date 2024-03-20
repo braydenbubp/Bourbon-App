@@ -1,6 +1,7 @@
 import { getSingleUser } from '../utils/auth';
 import { deleteComment, getReviewComments } from './commentData';
 import { deleteReview, getSingleReview } from './reviewData';
+import { getRTPByReviewId } from './reviewTasteProfile';
 
 const viewReviewDetails = (reviewFirebaseKey) => new Promise((resolve, reject) => {
   getSingleReview(reviewFirebaseKey)
@@ -19,6 +20,13 @@ const commentsOnReview = (reviewFirebaseKey) => new Promise((resolve, reject) =>
     }).catch((error) => reject(error));
 });
 
+const getReviewAndRTP = (reviewFirebaseKey) => new Promise((resolve, reject) => {
+  Promise.all([getSingleReview(reviewFirebaseKey), getRTPByReviewId(reviewFirebaseKey)])
+    .then(([reviewObject, rtpArray]) => {
+      resolve({ ...reviewObject, rtp: rtpArray });
+    }).catch((error) => reject(error));
+});
+
 const deleteReviewComments = (reviewId) => new Promise((resolve, reject) => {
   getReviewComments(reviewId).then((commentArray) => {
     const deleteCommentPromises = commentArray.map((comment) => deleteComment(comment.firebaseKey));
@@ -29,8 +37,11 @@ const deleteReviewComments = (reviewId) => new Promise((resolve, reject) => {
   }).catch((error) => reject(error));
 });
 
+// see view author details to join the tables, and then get data from there (how it looks)
+
 export {
   viewReviewDetails,
   commentsOnReview,
   deleteReviewComments,
+  getReviewAndRTP,
 };

@@ -9,6 +9,7 @@ import { createReview, updateReview } from '../../api/reviewData';
 import TastingNotesDropDown from '../tastingNotes';
 import DropDownSelectedContext from '../../utils/context/dropDownContext';
 import { createReviewTasteProfile, updateReviewTasteProfile } from '../../api/reviewTasteProfile';
+import { getReviewAndRTP } from '../../api/mergedData';
 
 const initialState = {
   userId: '',
@@ -18,6 +19,7 @@ const initialState = {
   rating: '',
   description: '',
   spiritType: '',
+  tasteProfile: [],
 };
 
 function ReviewForm({ obj, reviewDetails }) {
@@ -29,8 +31,12 @@ function ReviewForm({ obj, reviewDetails }) {
   const router = useRouter();
   const { user } = useAuth();
 
+  const getWholeReviewObject = () => {
+    getReviewAndRTP().then(setExistingNotes);
+  };
+  console.warn(obj);
   const addNoteToReview = async (reviewId = null) => {
-    createReviewTasteProfile({ tasteProfileId: selected ?? selected.firebaseKey, reviewId: reviewId ?? reviewDetails.firebaseKey }).then(async ({ name }) => {
+    createReviewTasteProfile(({ tasteProfileId: selected ?? selected.firebaseKey, reviewId: reviewId ?? reviewDetails.firebaseKey })).then(async ({ name }) => {
       const patchPayload2 = { firebaseKey: name };
       await updateReviewTasteProfile(patchPayload2);
       setSelectedNotes(selectedNotes);
@@ -39,21 +45,21 @@ function ReviewForm({ obj, reviewDetails }) {
 
   useEffect(() => {
     if (obj.firebaseKey) {
-      setFormInput(obj);
+      getWholeReviewObject().then(setFormInput(obj));
     }
   }, [obj, user]);
 
-  useEffect(() => {
-    const previousNotes = [];
-    if (obj.firebaseKey) {
-      if (obj.firebaseKey) {
-        obj.notes.forEach((note) => {
-          previousNotes.push(note.firebaseKey);
-        });
-        setExistingNotes(previousNotes);
-      }
-    }
-  }, [obj]);
+  // useEffect(() => {
+  //   const previousNotes = [];
+  //   if (obj.firebaseKey) {
+  //     if (obj.firebaseKey) {
+  //       obj.notes.forEach((note) => {
+  //         previousNotes.push(note.firebaseKey);
+  //       });
+  //       setExistingNotes(previousNotes);
+  //     }
+  //   }
+  // }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

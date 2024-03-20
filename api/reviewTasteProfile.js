@@ -58,9 +58,22 @@ const getSingleReviewTasteProfile = (firebaseKey) => new Promise((resolve, rejec
     .catch(reject);
 });
 
+const getRTPByReviewId = (reviewId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/reviewTasteProfile.json?orderBy="reviewId"&equalTo="${reviewId}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 export {
   getReviewTasteProfile,
   createReviewTasteProfile,
   updateReviewTasteProfile,
   getSingleReviewTasteProfile,
+  getRTPByReviewId,
 };
