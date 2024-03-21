@@ -175,6 +175,7 @@ ReviewForm.propTypes = {
     rating: PropTypes.string,
     firebaseKey: PropTypes.string,
     spiritType: PropTypes.string,
+    reviewId: PropTypes.string,
     note: PropTypes.arrayOf(
       PropTypes.shape({
         firebaseKey: PropTypes.string,
