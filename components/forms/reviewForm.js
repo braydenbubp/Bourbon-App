@@ -32,9 +32,10 @@ function ReviewForm({ obj, reviewDetails }) {
   const { user } = useAuth();
 
   const getWholeReviewObject = () => {
-    getReviewAndRTP().then(setExistingNotes);
+    getReviewAndRTP(obj).then(setExistingNotes);
+    console.warn(obj);
   };
-  console.warn(obj);
+
   const addNoteToReview = async (reviewId = null) => {
     createReviewTasteProfile(({ tasteProfileId: selected ?? selected.firebaseKey, reviewId: reviewId ?? reviewDetails.firebaseKey })).then(async ({ name }) => {
       const patchPayload2 = { firebaseKey: name };
@@ -44,7 +45,7 @@ function ReviewForm({ obj, reviewDetails }) {
   };
 
   useEffect(() => {
-    if (obj.firebaseKey) {
+    if (obj) {
       getWholeReviewObject().then(setFormInput(obj));
     }
   }, [obj, user]);

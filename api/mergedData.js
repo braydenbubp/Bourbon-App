@@ -23,7 +23,7 @@ const commentsOnReview = (reviewFirebaseKey) => new Promise((resolve, reject) =>
 const getReviewAndRTP = (reviewFirebaseKey) => new Promise((resolve, reject) => {
   Promise.all([getSingleReview(reviewFirebaseKey), getRTPByReviewId(reviewFirebaseKey)])
     .then(([reviewObject, rtpArray]) => {
-      resolve({ ...reviewObject, rtp: rtpArray });
+      resolve({ ...reviewObject, reviewTasteProfile: rtpArray });
     }).catch((error) => reject(error));
 });
 
