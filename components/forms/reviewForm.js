@@ -33,7 +33,6 @@ function ReviewForm({ obj, reviewDetails }) {
 
   const getWholeReviewObject = () => {
     getReviewAndRTP(obj).then(setExistingNotes);
-    console.warn(obj);
   };
 
   const addNoteToReview = async (reviewId = null) => {
@@ -45,22 +44,23 @@ function ReviewForm({ obj, reviewDetails }) {
   };
 
   useEffect(() => {
-    if (obj) {
-      getWholeReviewObject().then(setFormInput(obj));
+    if (obj.firebaseKey) {
+      setFormInput(obj);
     }
   }, [obj, user]);
-
-  // useEffect(() => {
-  //   const previousNotes = [];
-  //   if (obj.firebaseKey) {
-  //     if (obj.firebaseKey) {
-  //       obj.notes.forEach((note) => {
-  //         previousNotes.push(note.firebaseKey);
-  //       });
-  //       setExistingNotes(previousNotes);
-  //     }
-  //   }
-  // }, [obj]);
+  useEffect(() => {
+    const previousNotes = [];
+    if (reviewDetails) {
+      if (reviewDetails.firebaseKey === obj.reviewId) {
+        getWholeReviewObject().then(() => {
+          obj.note.forEach((notes) => {
+            previousNotes.push(notes.firebaseKey);
+            setExistingNotes(previousNotes);
+          });
+        });
+      }
+    }
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -175,7 +175,7 @@ ReviewForm.propTypes = {
     rating: PropTypes.string,
     firebaseKey: PropTypes.string,
     spiritType: PropTypes.string,
-    notes: PropTypes.arrayOf(
+    note: PropTypes.arrayOf(
       PropTypes.shape({
         firebaseKey: PropTypes.string,
         note: PropTypes.string,
