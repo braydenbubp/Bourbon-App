@@ -11,6 +11,7 @@ function RegisterForm({ userObj }) {
   });
 
   const router = useRouter();
+
   useEffect(() => {
     if (userObj.firebaseKey) {
       setFormData(userObj);
