@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { registerUser, updateUser } from '../../utils/auth';
+import { registerUser, updateUserBio } from '../../utils/auth';
 
 function RegisterForm({ userObj }) {
   const [formData, setFormData] = useState({
@@ -28,12 +28,12 @@ function RegisterForm({ userObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userObj.firebaseKey) {
-      updateUser(formData).then(() => router.push('/userReviews'));
+      updateUserBio(formData).then(() => router.push('/userReviews'));
     } else {
       const payload = { ...formData, uid: userObj.uid };
       registerUser(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
-        updateUser(patchPayload).then(() => {
+        updateUserBio(patchPayload).then(() => {
           router.push('/userReviews');
         });
       });

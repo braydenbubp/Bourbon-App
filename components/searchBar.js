@@ -17,7 +17,7 @@ const SearchBar = ({ setReviewSearch, reviews }) => {
   };
 
   return (
-    <div>
+    <div id="searchBar">
       <input
         placeholder="Search Spirits"
         onChange={handleChange}

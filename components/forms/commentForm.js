@@ -32,7 +32,7 @@ export default function CommentForm({ reviewDetails, onUpdate }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FloatingLabel controlId="floatingInput4" label="Spirit Comment" className="mb-3">
+      <FloatingLabel controlId="floatingInput4" label="Spirit Comment" className="mb-3" id="commentInput">
         <Form.Control
           type="text"
           placeholder="Comment Here"
@@ -41,7 +41,7 @@ export default function CommentForm({ reviewDetails, onUpdate }) {
           onChange={handleChange}
           required
         />
-        <Button variant="btn-small btn-secondary" type="submit"> Comment </Button>
+        <Button variant="btn-small btn-secondary" id="commentBtn" type="submit"> Comment </Button>
       </FloatingLabel>
     </Form>
   );

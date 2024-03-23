@@ -26,32 +26,29 @@ export default function ViewReview() {
   });
 
   return (
-    <div className="mt-5 d-flex flex-wrap">
-      <div className="d-flex flex-column">
-        <Card.Img src={reviewDetails.image} alt={reviewDetails.title} style={{ width: '300px' }} />
+    <div>
+      <div className="d-flex flex-wrap" id="reviewImg">
+        <div>
+          <Card.Img src={reviewDetails.image} alt={reviewDetails.title} style={{ width: '250px' }} />
+        </div>
+        <div className="text-black ms-5 details">
+          <Card.Title>{reviewDetails.spiritName}</Card.Title>
+          <p>Reviewed By: {reviewDetails.userObject?.userName}</p>
+          <p>Description: {reviewDetails.description || ''}</p>
+          <p>Price: ${reviewDetails.price}</p>
+          <p>Rating: {reviewDetails.rating}</p>
+        </div>
       </div>
-      <div className="text-white ms-5 details">
-        <Card.Title>{reviewDetails.spiritName}</Card.Title>
-        <p>Reviewed By: {reviewDetails.userObject?.userName}</p>
-        <p>Description: {reviewDetails.description || ''}</p>
-        <p>Price: ${reviewDetails.price}</p>
-        <p>Rating: {reviewDetails.rating}</p>
+      <div className="mt-5" id="wholeCommentDiv">
+        <CommentForm commentArray={commentArray} setCommentArray={setCommentArray} reviewDetails={reviewDetails} onUpdate={commentUpdate} />
       </div>
-      <div>
-        <Card style={{
-          width: '20rem', margin: '10px', backgroundColor: '#cbbaa6', color: '#605d50',
-        }}
-        >
-          <div>
-            <CommentForm commentArray={commentArray} setCommentArray={setCommentArray} reviewDetails={reviewDetails} onUpdate={commentUpdate} />
-          </div>
-          <div className="d-flex flex-wrap"> Comments:
-            {commentArray.map((comments) => (
-              <CommentCard key={comments.firebaseKey} comment={comments} />
-            ))}
-          </div>
-        </Card>
-      </div>
+      <Card id="commentHolder">
+        <div className="d-flex flex-wrap" id="commentSection">
+          {commentArray.map((comments) => (
+            <CommentCard key={comments.firebaseKey} comment={comments} />
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }

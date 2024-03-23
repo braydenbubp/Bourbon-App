@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { deleteReview } from '../api/reviewData';
 import { useAuth } from '../utils/context/authContext';
+import { deleteReviewComments } from '../api/mergedData';
 
 function ReviewCard({ reviewObj, onUpdate }) {
   const { user } = useAuth();
   const deleteThisReview = () => {
     if (window.confirm(`Delete ${reviewObj.spiritName}?`)) {
-      deleteReview(reviewObj.firebaseKey).then(() => onUpdate());
+      deleteReviewComments(reviewObj.firebaseKey).then(() => onUpdate());
     }
   };
 
@@ -18,27 +18,30 @@ function ReviewCard({ reviewObj, onUpdate }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Img variant="top" src={reviewObj.image} alt={reviewObj.spiritName} style={{ height: '400px' }} />
       <Card.Body>
-        <Card.Title>{reviewObj.spiritName}</Card.Title>
-        <p>${reviewObj.price}</p>
-        <p>Rating: {reviewObj.rating}</p>
-        <p>{reviewObj.description}</p>
+        <div id="reviewCardInitial">
+          <Card.Title>{reviewObj.spiritName}</Card.Title>
+          <p>${reviewObj.price}</p>
+          <p>Rating: {reviewObj.rating}</p>
+        </div>
 
         { user.uid === reviewObj.uid ? (
-          <>
+          <div id="cardBtnGroup">
             <Link href={`/review/edit/${reviewObj.firebaseKey}`} passHref>
-              <Button variant="info">EDIT</Button>
+              <Button variant="info" className="m-2">EDIT</Button>
             </Link>
             <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
-              <Button variant="light" className="m-2">VIEW</Button>
+              <Button variant="dark" className="m-2">VIEW</Button>
             </Link>
             <Button variant="danger" onClick={deleteThisReview} className="m-2">
               DELETE
             </Button>
-          </>
+          </div>
         ) : (
-          <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
-            <Button variant="light" className="m-2">VIEW</Button>
-          </Link>
+          <div id="viewOnlyBtn">
+            <Link href={`/review/${reviewObj.firebaseKey}`} passHref>
+              <Button variant="dark" className="m-2 d-flex justify-content-center">VIEW</Button>
+            </Link>
+          </div>
         )}
       </Card.Body>
     </Card>

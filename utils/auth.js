@@ -41,7 +41,7 @@ const registerUser = (userInfo) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updateUser = (payload) => new Promise((resolve, reject) => {
+const updateUserBio = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/user/${payload.firebaseKey}.json`, {
     method: 'PATCH',
     headers: {
@@ -69,5 +69,5 @@ export {
   getUser,
   getSingleUser,
   registerUser,
-  updateUser,
+  updateUserBio,
 };

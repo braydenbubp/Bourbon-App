@@ -35,7 +35,7 @@ export default function NavBar() {
             <Link passHref href="/review/new">
               <Nav.Link>Create Review</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
+            <Button variant="dark" onClick={signOut}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

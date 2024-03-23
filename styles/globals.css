@@ -18,5 +18,52 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: beige;
+}
+
+#searchBar {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+}
+
+#cardBtnGroup {
+  display: flex;
+  justify-content: center;
+}
+
+#reviewImg {
+  display: flex;
+  justify-content: center;
+}
+
+#reviewCardInitial {
+  text-align: center;
+}
+
+#commentBtn {
+  margin-top: 5px;
+}
+
+#commentHolder {
+  background-color: beige;
+  border: none;
+}
+
+#commentInput {
+  width: 500px;
+}
+
+#wholeCommentDiv {
+  display: flex;
+  justify-content: center;
+}
+
+#bio-card-img {
+  background-color: beige;
+  border: none;
+}
+
+#viewOnlyBtn {
+  margin-top: 24px;
 }

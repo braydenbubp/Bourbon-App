@@ -1,6 +1,6 @@
 import { getSingleUser } from '../utils/auth';
-import { getReviewComments } from './commentData';
-import { getSingleReview } from './reviewData';
+import { deleteComment, getReviewComments } from './commentData';
+import { deleteReview, getSingleReview } from './reviewData';
 
 const viewReviewDetails = (reviewFirebaseKey) => new Promise((resolve, reject) => {
   getSingleReview(reviewFirebaseKey)
@@ -19,7 +19,18 @@ const commentsOnReview = (reviewFirebaseKey) => new Promise((resolve, reject) =>
     }).catch((error) => reject(error));
 });
 
+const deleteReviewComments = (reviewId) => new Promise((resolve, reject) => {
+  getReviewComments(reviewId).then((commentArray) => {
+    const deleteCommentPromises = commentArray.map((comment) => deleteComment(comment.firebaseKey));
+
+    Promise.all(deleteCommentPromises).then(() => {
+      deleteReview(reviewId).then(resolve);
+    });
+  }).catch((error) => reject(error));
+});
+
 export {
   viewReviewDetails,
   commentsOnReview,
+  deleteReviewComments,
 };
