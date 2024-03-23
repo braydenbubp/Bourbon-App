@@ -24,8 +24,10 @@ const AuthProvider = (props) => {
   // an object/value = user is logged in
 
   const updateUser = useMemo(
-    () => (firebaseKey) => getUser(firebaseKey).then((gamerInfo) => {
-      setUser({ fbUser: oAuthUser, ...gamerInfo });
+    () => (uid) => getUser(uid).then((gamerInfo) => {
+      setUser({
+        uid: oAuthUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
+      });
     }),
     [oAuthUser],
   );

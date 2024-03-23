@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { registerUser, updateUserBio } from '../../utils/auth';
+import { useAuth } from '../../utils/context/authContext';
 
 function RegisterForm({ userObj }) {
   const [formData, setFormData] = useState({
     bio: '',
     userName: '',
   });
-
+  const { user, updateUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ function RegisterForm({ userObj }) {
       setFormData(userObj);
     }
   }, [userObj]);
+  console.warn(formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +31,9 @@ function RegisterForm({ userObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userObj.firebaseKey) {
-      updateUserBio(formData).then(() => router.push('/userReviews'));
+      updateUserBio(formData).then(() => {
+        updateUser(user.uid).then(() => router.push('/userReviews'));
+      });
     } else {
       const payload = { ...formData, uid: userObj.uid };
       registerUser(payload).then(({ name }) => {

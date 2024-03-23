@@ -34,3 +34,5 @@ export {
   commentsOnReview,
   deleteReviewComments,
 };
+
+// merge data for rtp returning array but needs to be an object. could change the edit []fbkey to get the merge data call for review and rtp instead of singleReview, then dont need to call in on the review form so you get all data in the edit function pass to form. Then pick the data out on the form?
