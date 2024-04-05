@@ -20,7 +20,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div id="homepage">
       <SearchBar setReviewSearch={setReviewSearch} reviewSearch={reviewSearch} reviews={reviews} />
       <div className="d-flex flex-wrap">
         {reviewSearch.map((review) => (
