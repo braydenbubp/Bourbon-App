@@ -51,7 +51,7 @@ body {
 }
 
 #commentHolder {
-  background-color: beige;
+  background-color: transparent;
   border: none;
 }
 
@@ -72,4 +72,8 @@ body {
 
 #viewOnlyBtn {
   margin-top: 24px;
+}
+
+#viewImg {
+  margin: 10px;
 }

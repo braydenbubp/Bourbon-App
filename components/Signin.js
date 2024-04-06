@@ -6,7 +6,7 @@ function Signin() {
   return (
     <div
       id="login"
-      className="text-center d-flex flex-column justify-content-center align-content-center"
+      className="text-center text-white d-flex flex-column justify-content-center align-content-center"
       style={{
         height: '90vh',
         padding: '30px',

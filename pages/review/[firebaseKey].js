@@ -28,10 +28,10 @@ export default function ViewReview() {
   return (
     <div>
       <div className="d-flex flex-wrap" id="reviewImg">
-        <div>
-          <Card.Img src={reviewDetails.image} alt={reviewDetails.title} style={{ width: '250px' }} />
+        <div id="viewImg">
+          <Card.Img src={reviewDetails.image} alt={reviewDetails.title} style={{ width: '300px' }} />
         </div>
-        <div className="text-black ms-5 details">
+        <div className="text-white ms-5 details">
           <Card.Title>{reviewDetails.spiritName}</Card.Title>
           <p>Reviewed By: {reviewDetails.userObject?.userName}</p>
           <p>Description: {reviewDetails.description || ''}</p>

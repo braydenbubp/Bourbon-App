@@ -74,7 +74,7 @@ function ReviewForm({ obj }) {
         <option value="Whiskey">Whiskey</option>
       </Form.Select>
 
-      <FloatingLabel controlId="floatingInput1" label="Spirit Description" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Spirit Review" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Description"
