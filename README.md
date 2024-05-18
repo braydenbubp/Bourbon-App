@@ -17,6 +17,7 @@ Bourbon aficionados need a better place to write/share reviews, which in turn co
 3. User will only be able to view another user's reviews.
 4. User will be able to comment on reviews.
 
+![Screenshot 2024-05-18 134625](https://github.com/braydenbubp/Bourbon-App/assets/145925606/8a4f43c0-d282-4bb1-a067-e45b18b3ae85)
 
 
 ## Links
