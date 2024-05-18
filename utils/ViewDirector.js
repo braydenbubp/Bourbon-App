@@ -8,12 +8,10 @@ import RegisterForm from '../components/forms/registerForm';
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
   const { user, userLoading } = useAuth();
 
-  // if user state is null, then show loader
   if (userLoading) {
     return <Loading />;
   }
 
-  // what the user should see if they are logged in
   if (user.userName) {
     return (
       <>
@@ -24,10 +22,11 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
       </>
     );
   }
-  if (!user.userName) {
-    <RegisterForm />;
+  if (user === false) {
+    return <Signin />;
   }
-  return <Signin />;
+
+  return <RegisterForm userObj={user} />;
 };
 
 export default ViewDirectorBasedOnUserAuthStatus;

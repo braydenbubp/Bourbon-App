@@ -37,6 +37,7 @@ function RegisterForm({ userObj }) {
       const payload = { ...formData, uid: userObj.uid };
       registerUser(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
+        updateUser(user.uid);
         updateUserBio(patchPayload).then(() => {
           router.push('/userReviews');
         });
