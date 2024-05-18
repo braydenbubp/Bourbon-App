@@ -4,7 +4,6 @@ import { useAuth } from '../../../utils/context/authContext';
 
 export default function UserEdit() {
   const { user } = useAuth();
-  console.warn(user);
   return (
     <RegisterForm userObj={user} />
   );

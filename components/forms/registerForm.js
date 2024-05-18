@@ -18,7 +18,6 @@ function RegisterForm({ userObj }) {
       setFormData(userObj);
     }
   }, [userObj]);
-  console.warn(formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
