@@ -14,10 +14,7 @@ export default function ViewReview() {
   const { firebaseKey } = router.query;
 
   const commentUpdate = () => {
-    const isMounted = true;
-    getReviewComments(firebaseKey).then((data) => {
-      if (isMounted) setCommentArray(data);
-    });
+    getReviewComments(firebaseKey).then(setCommentArray);
   };
 
   useEffect(() => {
@@ -26,7 +23,7 @@ export default function ViewReview() {
 
   useEffect(() => {
     commentUpdate();
-  });
+  }, []);
 
   return (
     <div>
