@@ -27,7 +27,10 @@ const AuthProvider = (props) => {
     () => (uid) => getUser(uid).then((gamerInfo) => {
       if (gamerInfo) {
         setUser({
-          uid: oAuthUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
+          uid: oAuthUser.uid,
+          userName: gamerInfo[0].userName ? gamerInfo[0].userName : null,
+          bio: gamerInfo[0].bio ? gamerInfo[0].bio : null,
+          firebaseKey: gamerInfo[0].firebaseKey ? gamerInfo[0].firebaseKey : null,
         });
       }
     }),
