@@ -41,15 +41,19 @@ const AuthProvider = (props) => {
       if (fbUser) {
         setOAuthUser(fbUser);
         getUser(fbUser.uid).then((gamerInfo) => {
-          let userObj = {};
-          if ('null' in gamerInfo) {
-            userObj = gamerInfo;
+          if (gamerInfo[0]) {
+            let userObj = {};
+            if ('null' in gamerInfo) {
+              userObj = gamerInfo;
+            } else {
+              userObj = {
+                uid: fbUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
+              };
+            }
+            setUser(userObj);
           } else {
-            userObj = {
-              uid: fbUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
-            };
+            setUser(false);
           }
-          setUser(userObj);
         });
       } else {
         setOAuthUser(false);
