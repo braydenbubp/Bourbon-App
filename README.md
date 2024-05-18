@@ -1,8 +1,4 @@
 # React/Next.js Template
-
-## Topics
-- [Get Started](#get-started)
-- [Starting the Project](#starting-the-project)
 ___
 ## Getting Started
 
@@ -20,6 +16,8 @@ Bourbon aficionados need a better place to write/share reviews, which in turn co
 2. User will be able to create, update, view, and delete a spirit review.
 3. User will only be able to view another user's reviews.
 4. User will be able to comment on reviews.
+
+
 
 ## Links
 [Deployed site](https://thedailyspirit.netlify.app/)
