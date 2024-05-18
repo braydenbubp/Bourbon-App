@@ -12,7 +12,19 @@ const getUser = (uid) => new Promise((resolve, reject) => {
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve((data)))
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
+const getSingleUser = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/user/${firebaseKey}.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
@@ -29,7 +41,7 @@ const registerUser = (userInfo) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updateUser = (payload) => new Promise((resolve, reject) => {
+const updateUserBio = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/user/${payload.firebaseKey}.json`, {
     method: 'PATCH',
     headers: {
@@ -55,6 +67,7 @@ export {
   signIn,
   signOut,
   getUser,
+  getSingleUser,
   registerUser,
-  updateUser,
+  updateUserBio,
 };

@@ -24,22 +24,25 @@ const AuthProvider = (props) => {
   // an object/value = user is logged in
 
   const updateUser = useMemo(
-    () => (firebaseKey) => getUser(firebaseKey).then((gamerInfo) => {
-      setUser({ fbUser: oAuthUser, ...gamerInfo });
+    () => (uid) => getUser(uid).then((gamerInfo) => {
+      setUser({
+        uid: oAuthUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
+      });
     }),
     [oAuthUser],
   );
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
         setOAuthUser(fbUser);
-        getUser(fbUser).then((gamerInfo) => {
+        getUser(fbUser.uid).then((gamerInfo) => {
           let userObj = {};
           if ('null' in gamerInfo) {
             userObj = gamerInfo;
           } else {
-            userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
+            userObj = {
+              uid: fbUser.uid, userName: gamerInfo[0].userName, bio: gamerInfo[0].bio, firebaseKey: gamerInfo[0].firebaseKey,
+            };
           }
           setUser(userObj);
         });
@@ -59,7 +62,7 @@ const AuthProvider = (props) => {
       // as long as user === null, will be true
       // As soon as the user value !== null, value will be false
     }),
-    [user, oAuthUser, updateUser, setUser],
+    [user, updateUser, setUser],
   );
 
   return <AuthContext.Provider value={value} {...props} />;
@@ -76,3 +79,5 @@ const useAuth = () => {
 };
 
 export { AuthProvider, useAuth, AuthConsumer };
+
+// userobj needs to match update user, need call update user after profile update

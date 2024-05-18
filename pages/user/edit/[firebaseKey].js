@@ -1,11 +1,11 @@
 import React from 'react';
-import { useAuth } from '../../../utils/context/authContext';
 import RegisterForm from '../../../components/forms/registerForm';
+import { useAuth } from '../../../utils/context/authContext';
 
 export default function UserEdit() {
-  const { user, setUser } = useAuth();
-
+  const { user } = useAuth();
+  console.warn(user);
   return (
-    <RegisterForm user={user} setUser={setUser} />
+    <RegisterForm userObj={user} />
   );
 }

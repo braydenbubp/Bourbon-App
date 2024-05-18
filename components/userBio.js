@@ -11,15 +11,16 @@ export default function UserBio() {
       <Card.Body>
         <Card.Title>{user.userName} </Card.Title>
         <p>{user.bio}</p>
-        <Link href={`/user/edit/${user.firebaseKey}`} passHref>
-          <Button variant="btn-small btn-secondary" className="btn">Edit Bio</Button>
-        </Link>
-
-        <Link href="/review/new" passHref>
-          <Button variant="btn-small btn-secondary">Add A Review</Button>
-        </Link>
+        <div id="bioBtns">
+          <Link href={`/user/edit/${user.firebaseKey}`} passHref>
+            <Button variant="btn-small btn-secondary" className="btn">Edit Bio</Button>
+          </Link>
+        </div>
 
       </Card.Body>
     </Card>
   );
 }
+
+// api call on this page to get user to get firebasekey instead of router query
+// get firebasekey into edit btn

@@ -5,7 +5,8 @@ import { signIn } from '../utils/auth';
 function Signin() {
   return (
     <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
+      id="login"
+      className="text-center text-white d-flex flex-column justify-content-center align-content-center"
       style={{
         height: '90vh',
         padding: '30px',
@@ -13,10 +14,10 @@ function Signin() {
         margin: '0 auto',
       }}
     >
-      <h1>Hi there!</h1>
+      <h1>Welcome Spirit Guru</h1>
       <p>Click the button below to login!</p>
       <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
-        Sign In
+        Enter
       </Button>
     </div>
   );

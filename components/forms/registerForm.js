@@ -1,48 +1,88 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { registerUser, updateUser } from '../../utils/auth';
+import { registerUser, updateUserBio } from '../../utils/auth';
+import { useAuth } from '../../utils/context/authContext';
 
-function RegisterForm({ user, setUser }) {
+function RegisterForm({ userObj }) {
   const [formData, setFormData] = useState({
     bio: '',
     userName: '',
-    uid: user.uid,
   });
-
+  const { user, updateUser } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (userObj.firebaseKey) {
+      setFormData(userObj);
+    }
+  }, [userObj]);
+  console.warn(formData);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (user.firebaseKey) {
-      updateUser().then(setUser)
-        .then(router.push('/userReviews'));
+    if (userObj.firebaseKey) {
+      updateUserBio(formData).then(() => {
+        updateUser(user.uid).then(() => router.push('/userReviews'));
+      });
+    } else {
+      const payload = { ...formData, uid: userObj.uid };
+      registerUser(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+        updateUserBio(patchPayload).then(() => {
+          router.push('/userReviews');
+        });
+      });
     }
-    registerUser(formData).then(router.push('/userReviews'));
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3">
-        <Form.Label><h1>Spirit Enthusiast</h1></Form.Label>
-        <Form.Control as="textarea" name="userName" id="userName" required placeholder="Enter your User Name" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-        <Form.Control as="textarea" name="bio" id="bio" required placeholder="Enter your Bio" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-      </Form.Group>
-      <Button variant="secondary" type="submit" className="btn btn-small">
-        Submit
-      </Button>
+      <h2 className="text-white mt-5">{userObj.firebaseKey ? 'Update' : 'Add a'} Bio</h2>
+
+      <FloatingLabel controlId="floatingInput1" label="User Name" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="User Name"
+          name="userName"
+          value={formData.userName}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingInput3" label="User Bio" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Enter Bio"
+          name="bio"
+          value={formData.bio}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <Button variant="btn-small btn-secondary" type="submit">{userObj.firebaseKey ? 'Edit' : 'Create'} Bio</Button>
+
     </Form>
   );
 }
 
 RegisterForm.propTypes = {
-  user: PropTypes.shape({
+  userObj: PropTypes.shape({
     uid: PropTypes.string,
     bio: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
-  setUser: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;

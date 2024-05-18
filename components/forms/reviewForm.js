@@ -6,11 +6,9 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { createReview, updateReview } from '../../api/reviewData';
-// import DropDown from '../MultiSelectDD';
-// import getState from '../../api/stateData';
-// import DropDownSelectedContext from '../../utils/context/dropdownSelectedContext';
 
 const initialState = {
+  userId: '',
   spiritName: '',
   image: '',
   price: '',
@@ -21,31 +19,15 @@ const initialState = {
 
 function ReviewForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  // const [selectedCategories, setSelectedCategories] = useState([]);
-  // const [states, setStates] = useState([]);
-  // const [existingCategories, setExistingCategories] = useState([]);
+
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
+    if (obj.firebaseKey) {
+      setFormInput(obj);
+    }
   }, [obj, user]);
-
-  // useEffect(() => {
-  //   getState().then(setStates);
-  // }, []);
-
-  // useEffect(() => {
-  //   const previousCategories = [];
-  //   if (obj.id) {
-  //     if (obj.id) {
-  //       obj.categories.forEach((category) => {
-  //         previousCategories.push(category.id);
-  //       });
-  //       setExistingCategories(previousCategories);
-  //     }
-  //   }
-  // }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +44,7 @@ function ReviewForm({ obj }) {
     } else {
       const payload = { ...formInput, uid: user.uid };
       createReview(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        const patchPayload = { firebaseKey: name, userId: user.firebaseKey };
         updateReview(patchPayload).then(() => {
           router.push('/');
         });
@@ -92,7 +74,7 @@ function ReviewForm({ obj }) {
         <option value="Whiskey">Whiskey</option>
       </Form.Select>
 
-      <FloatingLabel controlId="floatingInput1" label="Spirit Description" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Spirit Review" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Description"
