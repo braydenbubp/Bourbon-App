@@ -10,7 +10,7 @@ ___
 
 #### 2. From the root directory run "npm install" in the command line, then run "npm run prepare"
 
-#### 3. To start the app run "npm run dev" and open [text](http://localhost:3000/) in your browser
+#### 3. To start the app run "npm run dev" and open [http://localhost:3000/](http://localhost:3000/) in your browser
 
 ## The Problem
 Bourbon aficionados need a better place to write/share reviews, which in turn could make finding new spirits easier, and grow the community.
@@ -22,4 +22,5 @@ Bourbon aficionados need a better place to write/share reviews, which in turn co
 4. User will be able to comment on reviews.
 
 ## Links
-https://www.figma.com/file/Rxl8PYsGPRpgaCjLIqRnzX/Figma-basics?type=design&node-id=1669-162202&mode=design&t=fB84PK9QsrJc2LDh-0
+[Deployed site](https://thedailyspirit.netlify.app/)
+[Wireframe](https://www.figma.com/file/Rxl8PYsGPRpgaCjLIqRnzX/Figma-basics?type=design&node-id=1669-162202&mode=design&t=fB84PK9QsrJc2LDh-0)
