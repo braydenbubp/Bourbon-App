@@ -17,9 +17,23 @@ Bourbon aficionados need a better place to write/share reviews, which in turn co
 3. User will only be able to view another user's reviews.
 4. User will be able to comment on reviews.
 
-![Screenshot 2024-05-18 134625](https://github.com/braydenbubp/Bourbon-App/assets/145925606/8a4f43c0-d282-4bb1-a067-e45b18b3ae85)
+## Snipets From App
+Login 
+![Screenshot 2024-05-18 134521](https://github.com/braydenbubp/Bourbon-App/assets/145925606/b4b4b523-14ff-4703-85c0-bbd64781a7a1)
 
+Home Page
+![Screenshot 2024-05-18 134503](https://github.com/braydenbubp/Bourbon-App/assets/145925606/90968dd8-ca25-4b8b-b841-2253b8cd3754)
 
+User Review Page
+![Screenshot 2024-05-18 134447](https://github.com/braydenbubp/Bourbon-App/assets/145925606/759feca5-ca5a-4699-9b4b-caa66fcfd7e5)
+
+View Review Page
+![Screenshot 2024-05-18 134428](https://github.com/braydenbubp/Bourbon-App/assets/145925606/35109e97-b11f-4a60-9a28-0b3476b43a2c)
+
+___
 ## Links
 [Deployed site](https://thedailyspirit.netlify.app/)
+
 [Wireframe](https://www.figma.com/file/Rxl8PYsGPRpgaCjLIqRnzX/Figma-basics?type=design&node-id=1669-162202&mode=design&t=fB84PK9QsrJc2LDh-0)
+![Screenshot 2024-05-18 134625](https://github.com/braydenbubp/Bourbon-App/assets/145925606/17508aa1-f40a-4758-b177-feff1f17b42a)
+![Screenshot 2024-05-18 134640](https://github.com/braydenbubp/Bourbon-App/assets/145925606/f705c98e-2a4a-46bc-8e14-f75b30a1f9fd)
